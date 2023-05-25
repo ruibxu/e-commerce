@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
+import { useContext,useState } from 'react';
+import AuthContext from '../auth';
 
 function Copyright(props) {
   return (
@@ -29,6 +31,28 @@ function Copyright(props) {
 const theme = createTheme();
 
 export default function Login() {
+
+  const {auth} = useContext(AuthContext);
+  const [email,setEmail] = useState('');
+  const [password,setPassword] = useState('');
+
+  const handleLogin = (e) => {
+    e.preventDefault();
+    try{
+      const loginData = {
+        email,
+        password
+      };
+      auth.loginUser(loginData);
+    }catch(err){
+      console.log(err);
+    }
+  }
+
+
+
+
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
@@ -64,8 +88,8 @@ export default function Login() {
               id="email"
               label="Email Address"
               name="email"
-              autoComplete="email"
               autoFocus
+              onChange={(e)=>setEmail(e.target.value)}
             />
             <TextField
               margin="normal"
@@ -75,17 +99,14 @@ export default function Login() {
               label="Password"
               type="password"
               id="password"
-              autoComplete="current-password"
-            />
-            <FormControlLabel
-              control={<Checkbox value="remember" color="primary" />}
-              label="Remember me"
+              onChange={(e)=>setPassword(e.target.value)}
             />
             <Button
               type="submit"
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
+              onClick={handleLogin}
             >
               Sign In
             </Button>

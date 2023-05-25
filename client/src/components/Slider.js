@@ -5,6 +5,7 @@ import women from '../img/Women.jpg';
 import newarr from '../img/NewArraval.jpg';
 import Sale from '../img/Sale.jpg'
 import { useState } from 'react';
+import { Link } from "react-router-dom";
 
 const Slider = () => {
     const [slideIndex, setSlideIndex] = useState(0)
@@ -23,6 +24,7 @@ const Slider = () => {
                 <ArrowBackIosNewIcon/>
             </div>
             <div className="wrapper"  style={{ "--slide-index": slideIndex }}>
+                <Link to={'/products'} className='link'>
                 <div className="slide">
                     <div className="image-container">
                         <img src={newarr} alt="newarr" />
@@ -31,6 +33,8 @@ const Slider = () => {
                         <h1>New Arrivals</h1>
                     </div>
                 </div>
+                </Link>
+                <Link to={'/products/women'} className='link'>
                 <div className="slide">
                     <div className="image-container">
                         <img src={women} alt="women" />
@@ -39,6 +43,8 @@ const Slider = () => {
                         <h1>Women</h1>
                     </div>
                 </div>
+                </Link>
+                <Link to={'/products/men'} className='link'>
                 <div className="slide">
                     <div className="image-container">
                         <img src={men} alt="men" />
@@ -47,6 +53,8 @@ const Slider = () => {
                         <h1>Men</h1>
                     </div>
                 </div>
+                </Link>
+                <Link to={'/products/sale'} className='link'>
                 <div className="slide">
                     <div className="image-container">
                         <img src={Sale} alt="Sale" />
@@ -55,6 +63,7 @@ const Slider = () => {
                         <h1>Sale</h1>
                     </div>
                 </div>
+                </Link>
             </div>
             
             <div className="arrow arrowright" onClick={()=>handleClick("right")}>

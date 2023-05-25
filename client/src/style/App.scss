@@ -10,6 +10,10 @@ $font: 'Roboto', sans-serif;
     margin: 0;
     padding: 0;
 }
+.linkcom{
+    text-decoration: none;
+    color: $navbar-color;
+}
 .app{
     color:$text-color2;
     font-family: $font;
@@ -27,17 +31,21 @@ $font: 'Roboto', sans-serif;
         .navbar{
             color:$text-color;
             width: 100%;
-            @media screen and (max-width: 768px) {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            @media screen and (max-width: 920px) {
                 height: 50px;
             }
             .container{
+                width: 100%;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 padding: 1rem 2rem;
                 background-color: $navbar-color;
                 height: 40px;
-                @media screen and (max-width: 768px) {
+                @media screen and (max-width: 920px) {
                     padding: 10px 0px;
                 }
                 .left{
@@ -47,20 +55,19 @@ $font: 'Roboto', sans-serif;
                         display: none;
                         position: absolute;
                         flex-direction: column;
+                        margin-top: 5px;
                         width: 100%;
                         background-color: $navbar-color;
-                        padding: 10px;
-                        margin-top: 10px;
-                        border: 0.5px solid $text-color;
-                        border-radius: 5px;
-                        z-index: 1;
-                        @media screen and (max-width: 768px) {
+                        z-index: 2;
+                        @media screen and (max-width: 920px) {
                             display: flex;
-
-
                         }
                         .dropdown-item{
+                            border-top: 1px solid $link;
                             padding: 10px;
+                            color:$text-color;
+                            text-decoration: none;
+
                             &:hover{
                                 background-color: $link;
                                 cursor: pointer;
@@ -74,7 +81,7 @@ $font: 'Roboto', sans-serif;
                         align-items: center;
                         color:$text-color;
                         display: none;
-                        @media screen and (max-width: 768px) {
+                        @media screen and (max-width: 920px) {
                             display: flex;
                             
                         }
@@ -85,7 +92,7 @@ $font: 'Roboto', sans-serif;
                         margin: 0;
                         display: flex;
                         align-items: center;
-                        @media screen and (max-width: 768px) {
+                        @media screen and (max-width: 920px) {
                             display: none;
 
                         }
@@ -93,10 +100,43 @@ $font: 'Roboto', sans-serif;
                             display: inline-block;
                             margin-right: 1rem;
                             white-space: nowrap;
-                            &:hover{
-                                color: $link;
-                                text-decoration: underline;
-                                cursor: pointer;
+                            .link{
+                                color:$text-color;
+                                text-decoration: none;
+
+                                background-image: linear-gradient(
+                                    to right,
+                                    $link,
+                                    $link 50%,
+                                    white 50%
+                                );
+                                background-size: 200% 100%;
+                                background-position: -100%;
+                                display: inline-block;
+                                padding: 5px 0;
+                                background-clip: text;
+                                position: relative;
+
+                                &:before {
+                                    content: '';
+                                    background: $link;
+                                    display: block;
+                                    position: absolute;
+                                    bottom: -3px;
+                                    left: 0;
+                                    width: 0;
+                                    height: 3px;
+                                    transition: all 0.3s ease-in-out;
+                                }
+                                  
+                                &:hover {
+                                    background-position: 0;
+                                    color: $link;
+                                }
+                                
+                                &:hover::before {
+                                    width:100%;
+                                }
                             }
                         }
                     }
@@ -107,6 +147,8 @@ $font: 'Roboto', sans-serif;
                     text-align: center;
                     font-weight: 600;
                     .logo{
+                        color: white;
+                        text-decoration: none;
                         &:hover{
                             color: $link;
                             cursor: pointer;
@@ -126,7 +168,7 @@ $font: 'Roboto', sans-serif;
                             border: 0.5px solid $text-color;
                             margin-left: 25px;
                             padding: 5px;
-                            @media screen and (max-width: 768px) {
+                            @media screen and (max-width: 920px) {
                                 border: none;
                                 &:hover{
                                     cursor: pointer;
@@ -140,7 +182,7 @@ $font: 'Roboto', sans-serif;
                                 &:focus{
                                     outline: none;
                                 }
-                                @media screen and (max-width: 768px) {
+                                @media screen and (max-width: 920px) {
                                     display: none;
                                 }
                             }
@@ -193,6 +235,10 @@ $font: 'Roboto', sans-serif;
                 --slide-index: 0;
                 transform: translateX(calc(var(--slide-index) * -100vw));
 
+                .link{
+                    text-decoration: none;
+                    color: $text-color;
+                }
                   
                 .slide{
                     z-index: -1;
@@ -248,37 +294,42 @@ $font: 'Roboto', sans-serif;
                 align-items: center;
                 height: 100%;
                 .category-item{
-                    font-size: 2rem;
-                    flex:1;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                    margin: 5px;
+                    flex: 1;
                     height: 100%;
-                    position: relative;
-                    &:hover{
-                        cursor: pointer;
-                    }    
-                    .category-img{
-                        width: 100%;
-                        z-index: -1;
-                        object-fit: cover;
-                    }
-                    .category-info{
-
-                        position: absolute;
+                    margin: 5px;
+                    font-size: 2rem;
+                    .category-link{
                         display: flex;
                         align-items: center;
                         justify-content: center;
-                        width: 50%;
-                        height: 50px;
-                        background-color: rgba(0, 0, 0, 0.5);
-                        color:$text-color;
-                        z-index: 1;
-                        @media screen and (max-width: 768px) {
-                            font-size: 1rem;
+                        margin: 5px;
+                        position: relative;
+                        .category-img{
+                            width: 100%;
+                            z-index: -1;
+                            object-fit: cover;
                         }
+                        .category-info{
+    
+                            position: absolute;
+                            display: flex;
+                            align-items: center;
+                            justify-content: center;
+                            width: 50%;
+                            height: 50px;
+                            background-color: rgba(0, 0, 0, 0.5);
+                            color:$text-color;
+                            z-index: 1;
+                            @media screen and (max-width: 920px) {
+                                font-size: 1rem;
+                            }
+                        }
+
                     }
+                    &:hover{
+                        cursor: pointer;
+                    }    
+
 
                 }
 
@@ -378,14 +429,14 @@ $font: 'Roboto', sans-serif;
             .description{
                 font-size: 1.5rem;
                 margin-bottom: 1rem;
-                @media screen and (max-width: 768px) {
+                @media screen and (max-width: 920px) {
                     margin: 1rem 2rem;
                     
                 }
             }
             .input-container{
                 display: flex;
-                @media screen and (max-width: 768px) {
+                @media screen and (max-width: 920px) {
                     flex-direction: column;
                     
                 }
@@ -402,12 +453,12 @@ $font: 'Roboto', sans-serif;
                     &:focus{
                         outline: none;
                     }
-                    @media screen and (max-width: 768px) {
+                    @media screen and (max-width: 920px) {
                         width: 300px;
                     }
                 }
                 button{
-                    @media screen and (max-width: 768px) {
+                    @media screen and (max-width: 920px) {
                         margin-top: 1rem;
                     }
                     background-color: $link;
@@ -417,6 +468,7 @@ $font: 'Roboto', sans-serif;
                     font-size: 1.5rem;
                     &:hover{
                         cursor: pointer;
+                        color: #3c3c3c;
                     }
                 }
             }
@@ -429,7 +481,7 @@ $font: 'Roboto', sans-serif;
             justify-content: space-between;
             padding: 2rem 0;
             color:$text-color;
-            @media screen and (max-width: 768px) {
+            @media screen and (max-width: 920px) {
                 flex-direction: column;
             }
             .left, .center, .right{
@@ -453,7 +505,7 @@ $font: 'Roboto', sans-serif;
                     display: flex;
                     .social-icon{   
                         margin: 0 1rem;
-                        @media screen and (max-width: 768px) {
+                        @media screen and (max-width: 920px) {
                             margin: 0 0.5rem;
                         }
                         width: 40px;
@@ -555,7 +607,7 @@ $font: 'Roboto', sans-serif;
 
             display: flex;
             justify-content: space-between;
-            @media screen and (max-width: 768px) {
+            @media screen and (max-width: 920px) {
                 flex-direction: column;    
             }
             
@@ -567,7 +619,7 @@ $font: 'Roboto', sans-serif;
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
-                @media screen and (max-width: 768px) {
+                @media screen and (max-width: 920px) {
                     flex-direction: column;    
                 }
                 .dropdown{ 
@@ -576,7 +628,7 @@ $font: 'Roboto', sans-serif;
                     align-items: center;
                     justify-content: center;
                     margin: 10px;
-                    @media screen and (max-width: 768px) {
+                    @media screen and (max-width: 920px) {
                         margin: 20px;
                     }
                     font-size: 1.5rem;
@@ -598,7 +650,7 @@ $font: 'Roboto', sans-serif;
         .product{
             padding: 50px;
             display: flex;
-            @media screen and (max-width: 768px) {
+            @media screen and (max-width: 920px) {
                 flex-direction: column;
                 
             }
@@ -634,7 +686,7 @@ $font: 'Roboto', sans-serif;
                     .product-filter{
                         display: flex;
                         align-items: center; 
-                        @media screen and (max-width: 768px) {
+                        @media screen and (max-width: 920px) {
                             flex-direction: column;    
                         }
                         margin: 0 10px;
@@ -671,7 +723,7 @@ $font: 'Roboto', sans-serif;
                     align-items: center;
                     justify-content: space-between;
                     margin: 20px ;
-                    @media screen and (max-width: 768px) {
+                    @media screen and (max-width: 920px) {
                         flex-direction: column;
                        
                     }
@@ -710,7 +762,7 @@ $font: 'Roboto', sans-serif;
                             cursor: pointer;
                             background-color: #f8f4f4;
                         }
-                        @media screen and (max-width: 768px) {
+                        @media screen and (max-width: 920px) {
                             margin-top: 1rem;
                            
                         }
@@ -740,7 +792,7 @@ $font: 'Roboto', sans-serif;
                 align-items: center;
                 justify-content: space-between;
                 padding: 20px;
-                @media screen and (max-width: 768px) {
+                @media screen and (max-width: 920px) {
                     flex-direction: column;
                    
                 }
@@ -755,7 +807,7 @@ $font: 'Roboto', sans-serif;
                         cursor: pointer;
                         background-color: #f8f4f4;
                     }
-                    @media screen and (max-width: 768px) {
+                    @media screen and (max-width: 920px) {
                         margin-top: 1rem;
                        
                     }
@@ -771,7 +823,7 @@ $font: 'Roboto', sans-serif;
                         text-decoration: underline;
                         cursor: pointer;
                     }
-                    @media screen and (max-width: 768px) {
+                    @media screen and (max-width: 920px) {
                         margin-top: 1rem;
                        
                     }
@@ -781,7 +833,7 @@ $font: 'Roboto', sans-serif;
                 display: flex;
                 justify-content: space-between;
                 padding: 20px;
-                @media screen and (max-width: 768px) {
+                @media screen and (max-width: 920px) {
                     flex-direction: column;
                 }
 
@@ -791,7 +843,7 @@ $font: 'Roboto', sans-serif;
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
-                        @media screen and (max-width: 768px) {
+                        @media screen and (max-width: 920px) {
                             flex-direction: column;
                         }
                         padding: 20px;
@@ -828,7 +880,7 @@ $font: 'Roboto', sans-serif;
                             flex-direction: column;
                             align-items: center;
                             justify-content: center;
-                            @media screen and (max-width: 768px) {
+                            @media screen and (max-width: 920px) {
                                 margin-top: 1rem;
                                 margin-bottom: 1rem;
                             }
@@ -852,7 +904,7 @@ $font: 'Roboto', sans-serif;
                     }
                 }
                 .cart-bottom-summary{
-                    @media screen and (max-width: 768px) {
+                    @media screen and (max-width: 920px) {
                         margin-top: 1rem;
                         margin-bottom: 1rem;
                     }

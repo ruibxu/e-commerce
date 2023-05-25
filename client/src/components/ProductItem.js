@@ -6,7 +6,7 @@ import IconButton from '@mui/material/IconButton';
 const ProductItem = ({item}) => {
     return(
         <div className="product-item">
-            <img src={item.img} className="product-img"/>
+            <img src={item.image} className="product-img"/>
             <div className="product-buttons">
                 <IconButton className="product-button"><ShoppingCartOutlinedIcon/></IconButton>
                 <IconButton className="product-button"><FavoriteBorderOutlinedIcon/></IconButton>

@@ -72,6 +72,7 @@ registerUser = async (req, res) => {
         }).status(200).json({
             success: true,
             user: {
+                id: savedUser.id,
                 username: savedUser.username,
                 email: savedUser.email              
             }
@@ -90,6 +91,7 @@ loginUser = async (req, res) => {
     //console.log("loginUser");
     try {
         const { email, password } = req.body;
+        //console.log("email: " + email + " password: " + password);
 
         if (!email || !password) {
             return res
@@ -97,8 +99,13 @@ loginUser = async (req, res) => {
                 .json({ errorMessage: "Please enter all required fields." });
         }
 
-        const existingUser = await User.findOne({ email: email });
-        //console.log("existingUser: " + existingUser);
+        const existingUser = await User.findOne({
+            where: {
+              email: email
+            }
+          });
+
+          
         if (!existingUser) {
             return res
                 .status(401)
@@ -134,6 +141,7 @@ loginUser = async (req, res) => {
         }).status(200).json({
             success: true,
             user: {
+                id: existingUser.id,
                 username: existingUser.username,
                 email: existingUser.email              
             }
@@ -208,56 +216,40 @@ updateUser = async (req, res) => {
         if (!user) {
             res.status(404).json({ message: `User with the id not found` });
         }
-        const { username, password, passwordVerify } = req.body;
-        const updateObj = {};
-        if (username) {
-            if (username.length === user.username) {
-                return res
-                    .status(400)
-                    .json({
-                        errorMessage: "Please enter a new username."
-                    });
-            }
-            updateObj.username = username;
+        const {password, passwordVerify } = req.body;
+        if (!password || !passwordVerify) {
+            return res
+                .status(400)
+                .json({ errorMessage: "Please enter all required fields." });
         }
-        else if (password && passwordVerify) {
-            if (password.length < 8) {
-                return res
-                    .status(400)
-                    .json({
-                        errorMessage: "Please enter a password of at least 8 characters."
-                    });
-            }
-            if (password !== passwordVerify) {
-                return res
-                    .status(400)
-                    .json({
-                        errorMessage: "Please enter the same password twice."
-                    })
-            }
-            if (password === user.password) {
-                return res
-                    .status(400)
-                    .json({
-                        errorMessage: "Please enter a new password."
-                    })
-            }
-            const saltRounds = 10;
-            const salt = await bcrypt.genSalt(saltRounds);
-            const password = await bcrypt.hash(password, salt);
-            updateObj.password = password;
-            
-        }
-        else{
+        if (password.length < 8) {
             return res
                 .status(400)
                 .json({
-                    errorMessage: "Please enter all required fields."
+                    errorMessage: "Please enter a password of at least 8 characters."
                 });
         }
+        if (password !== passwordVerify) {
+            return res
+                .status(400)
+                .json({
+                    errorMessage: "Please enter the same password twice."
+                })
+        }
+        const passwordSame = await bcrypt.compare(password, user.password);
+        if (passwordSame) {
+            return res
+                .status(400)
+                .json({
+                    errorMessage: "Please enter a new password."
+                })
+        }
+        
+        const saltRounds = 10;
+        const salt = await bcrypt.genSalt(saltRounds);
+        const new_password = await bcrypt.hash(password, salt);
 
-    
-        await user.update(updateObj);
+        await user.update({ password: new_password });
         res.status(200).json({ message: `User with the id has been updated` });
     }
     catch (err) {

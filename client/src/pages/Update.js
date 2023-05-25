@@ -31,44 +31,18 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Register() {
+export default function Update() {
   const {auth} = useContext(AuthContext);
-  const [email,setEmail] = useState('');
-  const [username,setUsername] = useState('');
-  const [password,setPassword] = useState('');
-  const [passwordVerify,setPasswordVerify] = useState('');
-
-
-  const handleRegister = (e) => {
-    e.preventDefault();
-    try{
-      const registerData = {
-        email,
-        username,
-        password,
-        passwordVerify
-      };
-      auth.registerUser(registerData);
-    }catch(err){
-      console.log(err);
-    }
-  }
-
-
-
-
-
 
   const handleSubmit = (event) => {
     event.preventDefault();
     const data = new FormData(event.currentTarget);
-    console.log({
-      email: data.get('email'),
-      password: data.get('password'),
-    });
+    const updateData = {
+        password: data.get('password'),
+        passwordVerify: data.get('passwordVerify')
+    }
+    auth.updateUser(updateData);
   };
-
-
 
 
   return (
@@ -87,32 +61,10 @@ export default function Register() {
             <LockOutlinedIcon />
           </Avatar>
           <Typography component="h1" variant="h5" >
-            Sign up
+            Change Password
           </Typography>
           <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 3 }}>
             <Grid container spacing={2}>
-            <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="username"
-                  label="Username"
-                  name="username"
-                  autoComplete="username"
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-              </Grid>
-              <Grid item xs={12}>
-                <TextField
-                  required
-                  fullWidth
-                  id="email"
-                  label="Email Address"
-                  name="email"
-                  autoComplete="email"
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </Grid>
               <Grid item xs={12}>
                 <TextField
                   required
@@ -122,7 +74,6 @@ export default function Register() {
                   type="password"
                   id="password"
                   autoComplete="new-password"
-                  onChange={(e) => setPassword(e.target.value)}
                 />
               </Grid>
               <Grid item xs={12}>
@@ -133,7 +84,6 @@ export default function Register() {
                   label="PasswordVerify"
                   type="password"
                   id="passwordVerify"
-                  onChange={(e) => setPasswordVerify(e.target.value)}
                 />
               </Grid>
             </Grid>
@@ -142,17 +92,9 @@ export default function Register() {
               fullWidth
               variant="contained"
               sx={{ mt: 3, mb: 2 }}
-              onClick={handleRegister}
             >
-              Sign Up
+              Update
             </Button>
-            <Grid container justifyContent="flex-end">
-              <Grid item>
-                <Link href="/login" variant="body2">
-                  Already have an account? Sign in
-                </Link>
-              </Grid>
-            </Grid>
           </Box>
         </Box>
         <Copyright sx={{ mt: 5 }} />

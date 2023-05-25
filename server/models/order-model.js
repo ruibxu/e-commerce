@@ -8,7 +8,7 @@ const Order = sequelize.define('Order', {
         allowNull: false,
     },
     products : {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
         get() {
             return this.getDataValue('products').split(';')

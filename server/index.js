@@ -35,17 +35,17 @@ syncDatabase()
 
 // REGISTER AND LOGIN ROUTES
 const authRouter = require('./routes/auth-router')
-app.use('/auth', authRouter)
+app.use('/api/auth', authRouter)
 const productRouter = require('./routes/product-router')
-app.use('/products', productRouter)
-
-
-
-
-
-
-
-
+app.use('/api/products', productRouter)
+const cartRouter = require('./routes/cart-router')
+app.use('/api/cart', cartRouter)
+const orderRouter = require('./routes/order-router')
+app.use('/api/order', orderRouter)
+/*const stripeRouter = require('./routes/stripe-router')
+app.use('/stripe', stripeRouter)*/
+const favorieRouter = require('./routes/favorite-router')
+app.use('/api/favorite', favorieRouter)
 
 
 

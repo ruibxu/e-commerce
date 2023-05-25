@@ -37,35 +37,34 @@ getProductById = async (req, res) => {
 
 getProducts = async (req, res) => {
     try {
-        const products = await Product.findAll({
-            where: {
-                name: {
-                    [Op.like]: `%${req.params.name}%`
-                },
-                category: req.params.category,
-                gender: req.params.gender,
-                size: req.params.size,
-                color:{
-                    [Op.contains]: req.params.color
-                },
-                onSale: req.params.onSale? true : undefined,
-            },
-            order: [
-                ['price', req.params.priceOrder],
-                ['createdAt', req.params.newest? 'DESC' : undefined]
-            ]
-        })
-        if (products) {
-            res.status(200).json({
-                success: true,
-                products: products
-            })
-        } else {
-            res.status(404).json({
-                success: false,
-                message: "Products not found"
-            })
+        const qNew = req.query.new;
+        const qCategory = req.query.category;
+        let products;
+        if(qNew){
+            products = await Product.findAll({
+                order: [['createdAt', 'DESC']],
+                limit: 1
+            });
         }
+        else if(qCategory){
+            products = await Product.findAll({
+                where: {
+                  categories: {
+                    [Op.contains]: [qCategory],
+                  },
+                },
+            });
+        }
+        else{
+            products = await Product.findAll();
+        }
+
+    
+        res.status(200).json({
+            success: true,
+            products: products
+        })
+
     } catch (error) {
         res.status(500).json({ error: error.message });
     }

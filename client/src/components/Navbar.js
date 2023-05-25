@@ -8,6 +8,11 @@ import { styled } from '@mui/material/styles';
 import DehazeIcon from '@mui/icons-material/Dehaze';
 import { useState } from 'react';
 import { Link } from "react-router-dom";
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import AuthContext from '../auth';
+import { useContext, useEffect } from 'react';
+
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
     '& .MuiBadge-badge': {
@@ -23,11 +28,29 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
+    const {auth} = useContext(AuthContext);
 
     const handleOpenDropdown = () => {
         setIsOpen(!isOpen);
     }
 
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open = Boolean(anchorEl);
+
+    
+    const handleClick = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
+    };
+
+    const handleLogout = () => {
+        auth.logoutUser();
+    }
+
+    useEffect(() => {  
+    }, [auth.user]);
 
 
     return(
@@ -39,23 +62,21 @@ const Navbar = () => {
                     </IconButton>
                     {
                     isOpen && (<div className="dropdown-content">
-                        <a onClick={handleOpenDropdown} className='dropdown-item' >New Arrivals</a>
-                        <a onClick={handleOpenDropdown} className='dropdown-item'>Women</a>
-                        <a onClick={handleOpenDropdown} className='dropdown-item'>Men</a>
-                        <a onClick={handleOpenDropdown} className='dropdown-item'>Sale</a>
+                        <Link to={'/products'} className='dropdown-item' onClick={handleOpenDropdown}>New Arrivals</Link>
+                        <Link to={'/products/women'} onClick={handleOpenDropdown} className='dropdown-item'>Women</Link>
+                        <Link to={'/products/men'} onClick={handleOpenDropdown} className='dropdown-item'>Men</Link>
+                        <Link to={'/products/sale'} onClick={handleOpenDropdown} className='dropdown-item'>Sale</Link>
                     </div>)
                     }
                     <ul>
-                        <li>New Arrivals</li>
-                        <li>Women</li>
-                        <li>Men</li>
-                        <li>Sale</li>
+                        <li><Link to={'/products'} className='link'>New Arrivals</Link></li>
+                        <li><Link to={'/products/women'} className='link'>Women</Link></li>
+                        <li><Link to={'/products/men'} className='link'>Men</Link></li>
+                        <li><Link to={'/products/sale'} className='link'>Sale</Link></li>
                     </ul>
                 </div>
                 <div className="center">
-                    <span className="logo">
-                        Logo
-                    </span>
+                    <Link to= {'/'} className="logo">Logo</Link>
                 </div>
                 <div className="right">
                     <div className="links">
@@ -73,9 +94,32 @@ const Navbar = () => {
                                 <ShoppingCartIcon />
                             </StyledBadge>
                         </IconButton>
-                        <IconButton aria-label="account" className='buttons'>
+                        <IconButton aria-label="account" className='buttons' onClick={handleClick}>
                             <PersonIcon/>
                         </IconButton>
+
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            anchorOrigin={{
+                                vertical: 'bottom',
+                                horizontal: 'right',
+                              }}
+                            transformOrigin={{
+                                vertical: 'top',
+                                horizontal: 'right',
+                            }}
+                            open={open}
+                            onClose={handleClose}
+                            MenuListProps={{
+                            'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            {!auth.loggedIn?<Link to={"/login"} className="linkcom"><MenuItem onClick={handleClose}>Login</MenuItem></Link>:undefined}
+                            {!auth.loggedIn?<Link to={"/register"} className="linkcom"><MenuItem onClick={handleClose}>Register</MenuItem></Link>:undefined}
+                            {!auth.loggedIn?undefined:<Link to={"/update"} className="linkcom"><MenuItem onClick={handleClose}>Change Password</MenuItem></Link>}
+                            {!auth.loggedIn?undefined:<MenuItem onClick={() => { handleLogout(); handleClose(); }} >Logout</MenuItem>}
+                        </Menu>
 
                     </div>
                 

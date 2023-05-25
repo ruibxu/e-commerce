@@ -8,13 +8,13 @@ const Cart = sequelize.define('Cart', {
         allowNull: false,
     },
     products : {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
         get() {
             return this.getDataValue('products').split(';')
         },
         set(val) {
-           this.setDataValue('products',val.join(';'));
+            this.setDataValue('products',val.join(';'));
         },
     }
 });

@@ -16,38 +16,43 @@ const Product = sequelize.define('Product', {
         allowNull: false,
     },
     price: {
-        type: DataTypes.INTEGER,
+        type: DataTypes.DECIMAL(10, 2),
         allowNull: false,
     },
     image: {
         type: DataTypes.STRING,
         allowNull: false,
     },
-    category: {
+    categories: {
         type: DataTypes.STRING,
-        defaultValue: 'All',
+        get() {
+            return this.getDataValue('categories').split(';')
+        },
+        set(categories) {
+           this.setDataValue('categories',categories.join(';'));
+        },
     },
-    gender: {
+    size: {
         type: DataTypes.STRING,
-        defaultValue: 'All',
+        get() {
+            return this.getDataValue('size').split(';')
+        },
+        set(size) {
+           this.setDataValue('size',size.join(';'));
+        },
     },
-    quantity: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-    },
-    sizes: {
-        type: DataTypes.JSON,
-        allowNull: false,
-        defaultValue: {}
-      },
     color: {
-        type: DataTypes.JSON,
-        allowNull: false,
-        defaultValue: {}
+        type: DataTypes.STRING,
+        get() {
+            return this.getDataValue('color').split(';')
+        },
+        set(color) {
+           this.setDataValue('color',color.join(';'));
+        },
     },
-    onSale: {
+    inStock: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false,
+        defaultValue: true,
     },
     createdAt: {
         type: DataTypes.DATE,

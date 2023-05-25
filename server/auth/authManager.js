@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
+const User = require("../models/user-model")
 dotenv.config();
 
 function authManager() {
@@ -52,6 +53,7 @@ function authManager() {
             userId: userId
         }, process.env.JWT_SECRET);
     }
+
 
     return this;
 };

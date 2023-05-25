@@ -8,7 +8,7 @@ const Favorite = sequelize.define('Favorite', {
         allowNull: false,
     },
     products : {
-        type: Sequelize.STRING,
+        type: DataTypes.STRING,
         allowNull: false,
         get() {
             return this.getDataValue('products').split(';')
