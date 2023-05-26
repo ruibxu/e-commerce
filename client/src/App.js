@@ -29,8 +29,7 @@ function App() {
               <Route path="/login" element={ user ? <Navigate replace to="/"/> : <Login/>}/>
               <Route path="/register" element = { user ? <Navigate replace to="/"/>  : <Register/>}/>
               <Route path="/update" element={<Update/>}/>
-              <Route path="/products/:gender?/:category?" element={<ProductList/>}/>
-              <Route path="/products/sale" element={<ProductList/>}/>
+              <Route path="/products/:category?" element={<ProductList/>}/>
               <Route path="/product/:id" element={<Product/>}/>
               <Route path="/cart" element={<Cart/>}/>
             </Routes>

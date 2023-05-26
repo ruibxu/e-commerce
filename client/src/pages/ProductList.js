@@ -8,40 +8,37 @@ import { useState } from "react";
 import { useEffect } from "react";
 import Checkbox from '@mui/material/Checkbox';
 import FormControlLabel from '@mui/material/FormControlLabel';
-
+import Box from '@mui/material/Box';
 const ProductList = () =>{
     const location = useLocation();
-    const navigate = useNavigate();
-    const saleMatch = useMatch("/products/sale");
-    let sale;
-    let gender;
-    if(saleMatch){
-        sale =(location.pathname.split("/")[2]);
-    }
-    else{
-        gender=(location.pathname.split("/")[2]);
-    }
-    const category=(location.pathname.split("/")[3]);
-    
+    let cat = location.pathname.split("/")[2];
+    cat =  cat? cat.split("-"): undefined;
 
+    const [category, setCategory] = useState(cat);
     const [filters, setFilters] = useState({});
-    console.log(filters);
     const [sort, setSort] = useState("newest");
 
+    useEffect(() => {
+        cat = location.pathname.split("/")[2];
+        cat =  cat? cat.split("-"): undefined;
+        setCategory(cat);
+    }, [location.pathname.split("/")[2]]);
     
+
     const handleFilters = (e) =>{
-        let value;
-        if( e.target.name === "color"|| e.target.name === "size"){
-            value = e.target.value;
+        const { name, value } = e.target;
+        if (value === "All Colors" || value === "All Sizes") {
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                [name]: undefined,
+            }));
+        }else{
+            setFilters((prevFilters) => ({
+                ...prevFilters,
+                [name]: value,
+            }));
         }
-        else{
-            value = e.target.value.toLowerCase();
-        }
-        
-        setFilters({
-            ...filters,
-            [e.target.name]: value,
-        });
+
     };
 
     const handleSort = (e) =>{
@@ -59,7 +56,7 @@ const ProductList = () =>{
                     <div className="filter">
                         <div>Filter Products:</div>
                         <select name="color" className="dropdown" onChange={handleFilters}>
-                            <option disabled selected className="dropdown-item" >Color</option>
+                            <option  defaultValue className="dropdown-item" >All Colors</option>
                             <option className="dropdown-item">White</option>
                             <option className="dropdown-item">Black</option>
                             <option className="dropdown-item">Blue</option>
@@ -67,54 +64,27 @@ const ProductList = () =>{
                             <option className="dropdown-item">Green</option>
                         </select>
                         <select name="size" className="dropdown" onChange={handleFilters}>
-                            <option disabled selected className="dropdown-item" >Size</option>
+                            <option  defaultValue className="dropdown-item" >All Sizes</option>
                             <option className="dropdown-item">XS</option>
                             <option className="dropdown-item">S</option>
                             <option className="dropdown-item">M</option>
                             <option className="dropdown-item">L</option>
                             <option className="dropdown-item">XL</option>
                         </select>
-                        {
-                        gender?undefined:
-                        <select name="gender" className="dropdown" onChange={handleFilters}>
-                            <option selected className="dropdown-item" >Gender</option>
-                            <option className="dropdown-item">Women</option>
-                            <option className="dropdown-item">Men</option>
-                        </select>
-                        }
-
-                        {
-                        category?undefined:
-                        <select name="category" className="dropdown" onChange={handleFilters}>
-                            <option selected className="dropdown-item" >Category</option>
-                            <option className="dropdown-item">Jackets</option>
-                            <option className="dropdown-item">Botton</option>
-                            <option className="dropdown-item">Shoes</option>
-                        </select>
-                        }
-
-                        {
-                        sale?undefined:
-                            <select name="sale" className="dropdown" onChange={handleFilters}>
-                                <option selected className="dropdown-item" >All</option>
-                                <option className="dropdown-item" >Sale</option>
-                            </select>
-                        }
-
 
 
                     </div>
                     <div className="filter">
                         <div>Sort Products:</div>
                         <select name="sort" className="dropdown" onChange={handleSort}>
-                            <option selected className="dropdown-item" value="newest">Newest</option>
+                            <option defaultValue className="dropdown-item" value="newest">Newest</option>
                             <option  className="dropdown-item" value="asc">Price (asc)</option>
                             <option  className="dropdown-item" value="desc">Price (desc)</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <Products gender={gender} category={category} sale={sale} filters={filters} sort={sort} />
+            <Products category={category} filters={filters} sort={sort} />
             <Newsletter/>
             <Footer/>
         </div>

@@ -4,22 +4,19 @@ export const category = [
         id: 1,
         image: "https://images.pexels.com/photos/14859599/pexels-photo-14859599.jpeg",
         title: "Jackets",
-        gender: "women",
-        category: "jackets",
+        category: ["women","jackets"],
     },
     {
         id: 2,
         image: "https://images.pexels.com/photos/14808626/pexels-photo-14808626.jpeg",
         title: "Bottoms",
-        gender: "women",
-        category: "bottoms",
+        category: ["women","bottoms"],
     },
     {
         id: 3,
         image: "https://images.pexels.com/photos/2285500/pexels-photo-2285500.jpeg",
         title: "Shoes",
-        gender: "women",
-        category: "all",
+        category: ["women","shoes"],
     }
 ]
 
@@ -29,22 +26,19 @@ export const category2 = [
         id: 1,
         image: "https://images.pexels.com/photos/14918499/pexels-photo-14918499.jpeg",
         title: "Jackets",
-        gender: "men",
-        category: "jackets",
+        category: ["men","jackets"],
     },
     {
         id: 2,
         image: "https://images.pexels.com/photos/14883856/pexels-photo-14883856.jpeg",
         title: "Bottoms",
-        gender: "men",
-        category: "bottoms",
+        category: ["men","bottoms"],
     },
     {
         id: 3,
         image: "https://images.pexels.com/photos/3261068/pexels-photo-3261068.jpeg",
         title: "Shoes",
-        gender: "men",
-        category: "shoes",
+        category: ["men","shoes"],
     }
 ]
 

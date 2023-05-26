@@ -1,4 +1,5 @@
 const Product = require('../models/product-model');
+const { Op } = require('sequelize');
 
 createProduct = async (req, res) => {
     try{
@@ -37,35 +38,37 @@ getProductById = async (req, res) => {
 
 getProducts = async (req, res) => {
     try {
-        const qNew = req.query.new;
-        const qCategory = req.query.category;
-        let products;
-        if(qNew){
-            products = await Product.findAll({
-                order: [['createdAt', 'DESC']],
-                limit: 1
-            });
-        }
-        else if(qCategory){
-            products = await Product.findAll({
-                where: {
-                  categories: {
-                    [Op.contains]: [qCategory],
-                  },
-                },
-            });
-        }
-        else{
-            products = await Product.findAll();
-        }
 
-    
+        const category = req.query.category ? req.query.category.join(';') : undefined;
+        const color = req.query.color ? req.query.color.join(';'): undefined;
+        const size = req.query.size ? req.query.size.join(';'): undefined;
+        const sort = req.query.sort;
+        const orderCriteria = sort === 'asc'   ? [['price', 'ASC']] : 
+                              sort === 'desc'  ? [['price', 'DESC']]:
+                            [['createdAt', 'DESC']];
+
+
+        const pattern = (x) => {return x?`(^|;)${x.replace(';', '\\;')}(;|$)`:undefined;};
+
+        const catCondition = category ? { categories: { [Op.regexp]: pattern(category) } } : {};
+        const colorCondition = color ? { color: { [Op.regexp]: pattern(color) } } : {};
+        const sizeCondition = size ? { size: { [Op.regexp]: pattern(size) } } : {};
+        const whereCondition = { ...catCondition, ...colorCondition, ...sizeCondition };
+        
+
+        const products = await Product.findAll({
+            where: whereCondition,
+            order: orderCriteria,
+        });
+        
+        console.log(products);
         res.status(200).json({
             success: true,
             products: products
         })
 
     } catch (error) {
+        console.log(error);
         res.status(500).json({ error: error.message });
     }
 }
