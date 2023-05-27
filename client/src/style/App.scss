@@ -732,7 +732,7 @@ $font: 'Roboto', sans-serif;
                         display: flex;
                         align-items: center;
                         justify-content: space-between;
-                        width: 100px;
+                        width: 120px;
                         height: 40px;
                         border: 2px solid $link;
 
@@ -901,6 +901,11 @@ $font: 'Roboto', sans-serif;
                                 font-weight: 200;   
                             }
                         }
+                    }
+                    .cart-bottom-product:hover{
+                        background-color: #f8f4f4;
+                        cursor: pointer;
+                        z-index: -1;
                     }
                 }
                 .cart-bottom-summary{

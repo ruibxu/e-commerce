@@ -12,16 +12,20 @@ import Box from '@mui/material/Box';
 const ProductList = () =>{
     const location = useLocation();
     let cat = location.pathname.split("/")[2];
+    const search = new URLSearchParams(location.search).get("search");
     cat =  cat? cat.split("-"): undefined;
 
     const [category, setCategory] = useState(cat);
     const [filters, setFilters] = useState({});
     const [sort, setSort] = useState("newest");
 
+
     useEffect(() => {
         cat = location.pathname.split("/")[2];
         cat =  cat? cat.split("-"): undefined;
         setCategory(cat);
+        setFilters({});
+        setSort("newest");
     }, [location.pathname.split("/")[2]]);
     
 
@@ -55,16 +59,18 @@ const ProductList = () =>{
                 <div className="filterContainer">
                     <div className="filter">
                         <div>Filter Products:</div>
-                        <select name="color" className="dropdown" onChange={handleFilters}>
-                            <option  defaultValue className="dropdown-item" >All Colors</option>
+                        <select name="color" className="dropdown" value={filters.color || ""} onChange={handleFilters}>
+                            <option className="dropdown-item">All Colors</option>
                             <option className="dropdown-item">White</option>
                             <option className="dropdown-item">Black</option>
                             <option className="dropdown-item">Blue</option>
                             <option className="dropdown-item">Yellow</option>
                             <option className="dropdown-item">Green</option>
+                            <option className="dropdown-item">Red</option>
+                            <option className="dropdown-item">Pink</option>
                         </select>
-                        <select name="size" className="dropdown" onChange={handleFilters}>
-                            <option  defaultValue className="dropdown-item" >All Sizes</option>
+                        <select name="size" className="dropdown" value={filters.size || ""} onChange={handleFilters}>
+                            <option className="dropdown-item" >All Sizes</option>
                             <option className="dropdown-item">XS</option>
                             <option className="dropdown-item">S</option>
                             <option className="dropdown-item">M</option>
@@ -76,15 +82,15 @@ const ProductList = () =>{
                     </div>
                     <div className="filter">
                         <div>Sort Products:</div>
-                        <select name="sort" className="dropdown" onChange={handleSort}>
-                            <option defaultValue className="dropdown-item" value="newest">Newest</option>
+                        <select name="sort" className="dropdown" value={sort} onChange={handleSort}>
+                            <option  className="dropdown-item" value="newest">Newest</option>
                             <option  className="dropdown-item" value="asc">Price (asc)</option>
                             <option  className="dropdown-item" value="desc">Price (desc)</option>
                         </select>
                     </div>
                 </div>
             </div>
-            <Products category={category} filters={filters} sort={sort} />
+            <Products category={category} filters={filters} sort={sort} search={search} />
             <Newsletter/>
             <Footer/>
         </div>

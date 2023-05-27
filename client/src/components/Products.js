@@ -3,7 +3,7 @@ import ProductItem from "./ProductItem";
 import axios from "axios";
 import {useEffect, useState} from "react";
 import api from '../api'
-const Products  = ({category,filters,sort}) => {
+const Products  = ({category,filters,sort,search}) => {
     const [products,setProducts] = useState([]);
 
     useEffect(() => {
@@ -11,11 +11,14 @@ const Products  = ({category,filters,sort}) => {
             try{
                 const color= filters? filters.color: undefined;
                 const size = filters? filters.size: undefined;
+                console.log(color);
+                console.log(size);
                 const response = await api.getProducts(
                     {
                         category:category,
-                        color:color,
-                        size:size,
+                        color:[color],
+                        size:[size],
+                        search:search,
                         sort:sort
                     }
                 );
@@ -26,7 +29,7 @@ const Products  = ({category,filters,sort}) => {
             }
         }
         getProducts();
-    },[category,filters,sort]);
+    },[category,filters,sort,search]);
 
     /*
     useEffect(() => {

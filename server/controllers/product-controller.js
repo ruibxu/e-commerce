@@ -40,8 +40,10 @@ getProducts = async (req, res) => {
     try {
 
         const category = req.query.category ? req.query.category.join(';') : undefined;
+        console.log(req.query.color);
         const color = req.query.color ? req.query.color.join(';'): undefined;
         const size = req.query.size ? req.query.size.join(';'): undefined;
+        const search = req.query.search;
         const sort = req.query.sort;
         const orderCriteria = sort === 'asc'   ? [['price', 'ASC']] : 
                               sort === 'desc'  ? [['price', 'DESC']]:
@@ -53,8 +55,8 @@ getProducts = async (req, res) => {
         const catCondition = category ? { categories: { [Op.regexp]: pattern(category) } } : {};
         const colorCondition = color ? { color: { [Op.regexp]: pattern(color) } } : {};
         const sizeCondition = size ? { size: { [Op.regexp]: pattern(size) } } : {};
-        const whereCondition = { ...catCondition, ...colorCondition, ...sizeCondition };
-        
+        const searchCondition = search ? { name: { [Op.like]: `%${search}%` } } : {};
+        const whereCondition = { ...catCondition, ...colorCondition, ...sizeCondition, ...searchCondition };
 
         const products = await Product.findAll({
             where: whereCondition,

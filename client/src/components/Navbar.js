@@ -12,6 +12,10 @@ import Menu from '@mui/material/Menu';
 import MenuItem from '@mui/material/MenuItem';
 import AuthContext from '../auth';
 import { useContext, useEffect } from 'react';
+import {CartContext} from '../store/CartStore';
+import { useNavigate } from "react-router-dom";
+import { FavoriteContext } from '../store/FavoriteStore';
+
 
 
 const StyledBadge = styled(Badge)(({ theme }) => ({
@@ -29,6 +33,10 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
 const Navbar = () => {
     const [isOpen, setIsOpen] = useState(false);
     const {auth} = useContext(AuthContext);
+    const { cart } = useContext(CartContext);
+    const {favorites} = useContext(FavoriteContext);
+    const [searchText, setSearchText] = useState("");
+    const navigate = useNavigate();
 
     const handleOpenDropdown = () => {
         setIsOpen(!isOpen);
@@ -49,8 +57,23 @@ const Navbar = () => {
         auth.logoutUser();
     }
 
+
+    const handleKeyPress = (event) => {
+        if (event.key === "Enter") {
+            handleSearch();
+        }
+    };
+
+    const handleSearch = () => {
+        navigate(`/products?search=${encodeURIComponent(searchText)}`);
+    };
+
+
+
     useEffect(() => {  
     }, [auth.user]);
+
+    const totalQuantity = cart.reduce((total, item) => total + item.quantity,0);
 
 
     return(
@@ -76,24 +99,30 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="center">
-                    <Link to= {'/'} className="logo">Logo</Link>
+                    <Link to= {'/'} className="logo">GoShop</Link>
                 </div>
                 <div className="right">
                     <div className="links">
                         <div className="search">
-                            <input type="text" placeholder="Search for item..."/>
-                            <IconButton aria-label="search" className='buttons'>
+                            <input type="text" placeholder="Search for item..." value={searchText} onChange={(e) => setSearchText(e.target.value)} onKeyPress={handleKeyPress}/>
+                            <IconButton aria-label="search" className='buttons' onClick={handleSearch}>
                                 <SearchIcon/>
                             </IconButton>
                         </div>
+                        <Link to={"/wishlist"} className="linkcom">
                         <IconButton aria-label="favorite" className='buttons'>
-                            <FavoriteBorderIcon />
+                            <StyledBadge badgeContent={favorites.length} color="secondary">
+                                <FavoriteBorderIcon />
+                            </StyledBadge>
                         </IconButton>
+                        </Link>
+                        <Link to={"/cart"} className="linkcom">
                         <IconButton aria-label="cart" className='buttons' > 
-                            <StyledBadge badgeContent={4} color="secondary">
+                            <StyledBadge badgeContent={totalQuantity} color="secondary">
                                 <ShoppingCartIcon />
                             </StyledBadge>
                         </IconButton>
+                        </Link>
                         <IconButton aria-label="account" className='buttons' onClick={handleClick}>
                             <PersonIcon/>
                         </IconButton>

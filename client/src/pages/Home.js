@@ -8,7 +8,6 @@ import Newsletter from '../components/Newsletter';
 import Footer from '../components/Footer';
 
 const Home = () => {
-
     return (
         <div>
             <Announcement/>

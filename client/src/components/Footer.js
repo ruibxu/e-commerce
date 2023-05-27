@@ -7,6 +7,7 @@ import YouTubeIcon from '@mui/icons-material/YouTube';
 import RoomOutlinedIcon from '@mui/icons-material/RoomOutlined';
 import LocalPhoneOutlinedIcon from '@mui/icons-material/LocalPhoneOutlined';
 import EmailOutlinedIcon from '@mui/icons-material/EmailOutlined';
+import { Link } from "react-router-dom";
 const Footer = () => {
     return (
         <footer className="footer">
@@ -40,11 +41,11 @@ const Footer = () => {
                     Useful Links
                 </div>
                 <ul className="links">
-                    <li className="link">Home</li>
+                    <Link to={"/"} className="linkcom" style={{color: "white"}}><li className="link">Home</li></Link>
                     <li className="link">About</li>
                     <li className="link">Contact</li>
-                    <li className="link">Products</li>
-                    <li className="link">Cart</li>
+                    <Link to={"/products"} className="linkcom" style={{color: "white"}}><li className="link">Products</li></Link>
+                    <Link to={"/cart"} className="linkcom" style={{color: "white"}}><li className="link">Cart</li></Link>
                 </ul>
             </div>
             <div className="right">
