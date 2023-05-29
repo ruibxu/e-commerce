@@ -16,14 +16,20 @@ const sequelize = new Sequelize({
 module.exports = sequelize;
 */
 
+const sequelize = new Sequelize(process.env.DB_NAME, process.env.DB_USER, process.env.DB_PASSWORD2, {
+  host: process.env.DB_HOST,
+  dialect: 'mysql',
+  timezone: '-04:00'
+});
+
+/*
 const sequelize = new Sequelize(process.env.LOCAL_DB_NAME, process.env.LOCAL_DB_USER, process.env.DB_PASSWORD, {
   host: process.env.LOCAL_DB_HOST,
   dialect: 'mysql',
   timezone: '-04:00'
 });
 
-
-
+*/
 
 /*
 sequelize.authenticate()

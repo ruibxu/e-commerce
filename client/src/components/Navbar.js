@@ -101,7 +101,7 @@ const Navbar = () => {
                     </ul>
                 </div>
                 <div className="center">
-                    <Link to= {'/'} className="logo">GoShop</Link>
+                    <Link to= {'/'} className="logo">Shop</Link>
                 </div>
                 <div className="right">
                     <div className="links">

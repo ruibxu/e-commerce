@@ -52,43 +52,11 @@ app.use('/api/favorite', favorieRouter)
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
 
-
-/*
-const PORT = 4000;
-
-app.use(express.json())
-app.use(cors({ origin: ["http://localhost:3000"], credentials: true }))
-
-
-
-
 app.get('/', function (req, res) {
-  res.send('Hello, this is the backend!')
-})
-
-app.get("/users", (req, res) => {
-    db.query("SELECT * FROM users", (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.send(result)
-        }
-    })
-})
-
-app.post("/users", (req, res) => {
-    const username = req.body.username
-    const email = req.body.email
-    const password = req.body.password
-    db.query("INSERT INTO users (username, email, password) VALUES (?, ?, ?)", [username, email, password], (err, result) => {
-        if (err) {
-            console.log(err)
-        } else {
-            res.send("Values inserted")
-        }
-    })
-})
+    res.send('Hello, this is the backend!')
+  })
 
 
 
-*/
+
+
