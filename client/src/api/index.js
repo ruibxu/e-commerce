@@ -4,7 +4,7 @@ axios.defaults.withCredentials = true;
 
 const api = axios.create({
     //change this later
-    baseURL: process.env.REACT_APP_BACKEND_API_URL,
+    baseURL: process.env.REACT_APP_API_URL,
 })
 
 // auth

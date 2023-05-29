@@ -10,16 +10,16 @@ registerUser = async (req, res) => {
         const { username, email, password, passwordVerify, secretKey } = req.body;
         //console.log("create user: " + username + " " + email + " " + password + " " + passwordVerify);
         let isAdmin = false;
-        if (secretKey && secretKey !== process.env.SECRET_KEY) {
-            return res
-                .status(400)
-                .json({
-                    success: false,
-                    errorMessage: "Invalid secret key."
-                })
+        if (secretKey && secretKey === process.env.SECRET_KEY) {
+            isAdmin = true;
         }
         else{
-            isAdmin = true;
+            return res
+            .status(400)
+            .json({
+                success: false,
+                errorMessage: "Invalid secret key."
+            })
         }
         if (!username || !email || !password || !passwordVerify) {
             return res

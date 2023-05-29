@@ -104,7 +104,9 @@ function AuthContextProvider(props) {
 
 
     auth.loginUser = async function (userData) {
+        console.log(api.baseUrl)
         try{
+            
             const response = await api.loginUser(userData);
             console.log(userData);
             if (response.status === 200) {

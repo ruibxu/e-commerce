@@ -10,10 +10,11 @@ const db = require('./db')
 
 const PORT = process.env.PORT || 4000;
 
+
 // SETUP THE MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ["http://localhost:3000","https://api.stripe.com"],
+    origin: ["http://localhost:3000",process.env.FRONTEND_URL,"https://api.stripe.com"],
     credentials: true
 }))
 app.use(express.json())
