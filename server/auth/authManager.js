@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const dotenv = require("dotenv");
-const User = require("../models/user-model")
+const User = require("../models/user-model");
 dotenv.config();
 
 function authManager() {
@@ -47,6 +47,24 @@ function authManager() {
             return null;
         }
     }
+
+    verifyAdmin = async (req, res, next) => {
+        try {
+            const userId = verifyUser(req)
+            if (!userId) {
+                return null;
+            }
+    
+            user = await User.findOne({ where: { id: userId } });
+            if (!user || !user.isadmin) {
+                return null;
+              }
+            return userId;
+        }
+        catch (err) {
+            return null;
+        }      
+    };
 
     signToken = (userId) => {
         return jwt.sign({

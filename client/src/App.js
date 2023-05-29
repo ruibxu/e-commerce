@@ -19,6 +19,9 @@ import Update from './pages/Update';
 import ScrollToTop from './components/ScrollToTop';
 import Favorites from './pages/Favorites';
 import { FavoriteContextProvider } from './store/FavoriteStore';
+import Admin from './pages/Admin';
+import Success from './pages/Success';
+import AdminRegister from './pages/AdminRegister';
 
 
 function App() {
@@ -33,6 +36,7 @@ function App() {
             <div className="container">
               <Routes>
                 <Route path="/" element={<Home/>}/>
+                <Route path="/e-commerce-client" element={<Home/>}/>
                 <Route path="/login" element={ user ? <Navigate replace to="/"/> : <Login/>}/>
                 <Route path="/register" element = { user ? <Navigate replace to="/"/>  : <Register/>}/>
                 <Route path="/update" element={<Update/>}/>
@@ -40,6 +44,9 @@ function App() {
                 <Route path="/product/:id" element={<Product/>}/>
                 <Route path="/cart" element={<Cart/>}/>
                 <Route path="/wishlist" element={<Favorites/>}/>
+                <Route path="/admin" element={<Admin/>}/>
+                <Route path="/success" element={<Success/>}/>
+                <Route path="/admin-register" element={<AdminRegister/>}/>
               </Routes>
             </div>
           </div>

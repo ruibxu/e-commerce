@@ -2,6 +2,7 @@ const Product = require('../models/product-model');
 const { Op } = require('sequelize');
 
 createProduct = async (req, res) => {
+    console.log(req.body);
     try{
         const newProduct = await Product.create(req.body);
         res.status(201).json({
@@ -9,7 +10,9 @@ createProduct = async (req, res) => {
             product: newProduct
         })
     } catch (error) {
-        res.status(500).json({ error: error.message });
+        console.log(error.message);
+        res.status(500).json({ error: error.message});
+
     }
 } 
 

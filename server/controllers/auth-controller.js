@@ -7,8 +7,20 @@ registerUser = async (req, res) => {
 
     //console.log("REGISTERING USER IN BACKEND");
     try {
-        const { username, email, password, passwordVerify } = req.body;
+        const { username, email, password, passwordVerify, secretKey } = req.body;
         //console.log("create user: " + username + " " + email + " " + password + " " + passwordVerify);
+        let isAdmin = false;
+        if (secretKey && secretKey !== process.env.SECRET_KEY) {
+            return res
+                .status(400)
+                .json({
+                    success: false,
+                    errorMessage: "Invalid secret key."
+                })
+        }
+        else{
+            isAdmin = true;
+        }
         if (!username || !email || !password || !passwordVerify) {
             return res
                 .status(400)
@@ -52,13 +64,21 @@ registerUser = async (req, res) => {
         const salt = await bcrypt.genSalt(saltRounds);
         const passwordHash = await bcrypt.hash(password, salt);
         //console.log("passwordHash: " + passwordHash);
-        
-        const  savedUser = await User.create({
-            username: username, 
-            email: email, 
-            password: passwordHash});
+        let savedUser;
+        if(!isAdmin){
+            savedUser = await User.create({
+                username: username, 
+                email: email, 
+                password: passwordHash});
+        }
+        else{
+            savedUser = await User.create({
+                username: username, 
+                email: email, 
+                password: passwordHash,
+                isAdmin: true});
+        }
 
-            
         //console.log("new user saved: " + savedUser._id);
 
         // LOGIN THE USER
@@ -74,7 +94,8 @@ registerUser = async (req, res) => {
             user: {
                 id: savedUser.id,
                 username: savedUser.username,
-                email: savedUser.email              
+                email: savedUser.email,
+                isAdmin: savedUser.isAdmin              
             }
         })
 
@@ -143,7 +164,8 @@ loginUser = async (req, res) => {
             user: {
                 id: existingUser.id,
                 username: existingUser.username,
-                email: existingUser.email              
+                email: existingUser.email,
+                isAdmin: existingUser.isAdmin                      
             }
         })
 

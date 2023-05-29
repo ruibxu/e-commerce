@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 4000;
 // SETUP THE MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
-    origin: ["http://localhost:3000"],
+    origin: ["http://localhost:3000","https://api.stripe.com"],
     credentials: true
 }))
 app.use(express.json())
@@ -42,8 +42,8 @@ const cartRouter = require('./routes/cart-router')
 app.use('/api/cart', cartRouter)
 const orderRouter = require('./routes/order-router')
 app.use('/api/order', orderRouter)
-/*const stripeRouter = require('./routes/stripe-router')
-app.use('/stripe', stripeRouter)*/
+const stripeRouter = require('./routes/stripe-router')
+app.use('/api/checkout', stripeRouter)
 const favorieRouter = require('./routes/favorite-router')
 app.use('/api/favorite', favorieRouter)
 

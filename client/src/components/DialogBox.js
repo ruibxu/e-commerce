@@ -1,9 +1,9 @@
 import { Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button } from "@mui/material"
 
-const DialogBox = ({errorMessage, onClose }) => {
+const DialogBox = ({diaglogTitle, errorMessage, onClose }) => {
     return (
     <Dialog open={!!errorMessage} onClose={onClose}>
-      <DialogTitle >Error</DialogTitle>
+      <DialogTitle >{diaglogTitle}</DialogTitle>
       <DialogContent>
         <DialogContentText>{errorMessage}</DialogContentText>
       </DialogContent>

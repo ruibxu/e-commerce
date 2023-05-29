@@ -21,7 +21,7 @@ function AuthContextProvider(props) {
     const [errorMessage, setErrorMessage] = useState("");
     const [auth, setAuth] = useState({
         user: null,
-        loggedIn: false
+        loggedIn: false,
     });
     const navigate = useNavigate();
 
@@ -199,7 +199,7 @@ function AuthContextProvider(props) {
             auth
         }}>
             {props.children}
-            <DialogBox errorMessage={errorMessage} onClose={handleCloseDialog} />
+            <DialogBox diaglogTitle="ERROR" errorMessage={errorMessage} onClose={handleCloseDialog} />
         </AuthContext.Provider>
     );
 }

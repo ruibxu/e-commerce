@@ -1,9 +1,10 @@
 import axios from 'axios'
+
 axios.defaults.withCredentials = true;
 
 const api = axios.create({
     //change this later
-    baseURL: 'http://localhost:4000/api',
+    baseURL: process.env.REACT_APP_BACKEND_API_URL,
 })
 
 // auth
@@ -34,6 +35,8 @@ export const getUserOrder = (id) => api.get(`order/${id}`)
 export const updateOrder = (id, payload) => api.put(`order/${id}`, payload)
 export const deleteOrder = (id) => api.delete(`order/${id}`)
 
+export const checkout = (payload) => api.post(`checkout/payment/`, payload)
+
 
 const apis = {
     registerUser,
@@ -53,7 +56,8 @@ const apis = {
     createOrder,
     getUserOrder,
     updateOrder,
-    deleteOrder
+    deleteOrder,
+    checkout
 }
 
 export default apis

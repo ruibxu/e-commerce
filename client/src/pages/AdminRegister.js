@@ -32,12 +32,13 @@ function Copyright(props) {
 
 const theme = createTheme();
 
-export default function Register() {
+export default function AdminRegister() {
   const {auth} = useContext(AuthContext);
   const [email,setEmail] = useState('');
   const [username,setUsername] = useState('');
   const [password,setPassword] = useState('');
   const [passwordVerify,setPasswordVerify] = useState('');
+  const [secretKey,setSecretKey] = useState('');
 
 
   const handleRegister = (e) => {
@@ -47,16 +48,14 @@ export default function Register() {
         email,
         username,
         password,
-        passwordVerify
+        passwordVerify,
+        secretKey
       };
       auth.registerUser(registerData);
     }catch(err){
       console.log(err);
     }
   }
-
-
-
 
   return (
     <ThemeProvider theme={theme}>
@@ -70,11 +69,10 @@ export default function Register() {
             alignItems: 'center',
           }}
         >
-          <RouterLink to="/admin-register"
+          <RouterLink to="/register"
             style={{ color: 'inherit', position: 'absolute', right: '10px', top: '10px' }}
           >
-            {'I am a admin, I have secret key'}
-            
+            {'Go back to User Register'}
           </RouterLink>
           <Avatar sx={{ m: 1, bgcolor: 'secondary.main' }}>
             <LockOutlinedIcon />
@@ -127,6 +125,18 @@ export default function Register() {
                   type="password"
                   id="passwordVerify"
                   onChange={(e) => setPasswordVerify(e.target.value)}
+                />
+              </Grid>
+
+              <Grid item xs={12}>
+                <TextField
+                  required
+                  fullWidth
+                  name="SecretKey"
+                  label="SecretKey"
+                  type="SecretKey"
+                  id="SecretKey"
+                  onChange={(e) => setSecretKey(e.target.value)}
                 />
               </Grid>
             </Grid>

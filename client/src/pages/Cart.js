@@ -5,18 +5,47 @@ import Footer from "../components/Footer";
 import RemoveIcon from '@mui/icons-material/Remove';
 import AddIcon from '@mui/icons-material/Add';
 import { CartContext } from "../store/CartStore";
-import { useContext } from "react";
+import { useContext, useEffect, useState} from "react";
 import ClearIcon from '@mui/icons-material/Clear';
 import { Link } from "react-router-dom";
 import { FavoriteContext } from "../store/FavoriteStore";
+import StripeCheckout from 'react-stripe-checkout';
+import api from '../api'
+import { useNavigate } from "react-router-dom";
+
 
 const Cart = () => {
-    const { cart, addToCart,clearItem} = useContext(CartContext);
+    const { cart, addToCart,clearItem,clearCart} = useContext(CartContext);
     const { favorites } = useContext(FavoriteContext);
-
+    const [stripeToken, setStripeToken] = useState(null);
+    const navigate = useNavigate();
 
     const totalPrice= cart.reduce((acc, curr) => acc + curr.price * curr.quantity, 0);
     const totalQuantity= cart.reduce((acc, curr) => acc + curr.quantity, 0);
+    const totalwithShipping= totalPrice>=100? totalPrice: totalPrice+5.90;
+
+    const stripeKey=process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
+    
+    useEffect(() => {
+        const makeRequest = async () => {
+            try{
+                const response = await api.checkout({
+                    tokenId: stripeToken.id,
+                    amount: totalwithShipping*100,
+                });
+                if(response.data.success){
+                    clearItem();
+                    navigate('/success');
+                }
+            }
+            catch(err){
+                console.log(err);
+            }
+        }
+        stripeToken && makeRequest();
+    }, [stripeToken, totalwithShipping, navigate]);
+
+
 
 
     return (
@@ -89,15 +118,29 @@ const Cart = () => {
                             <span className="cart-bottom-summary-item-text">Estimated Shipping</span>
                             <span className="cart-bottom-summary-item-price">$ 5.90</span>
                         </div>
+                        {totalPrice>= 100?                         
                         <div className="cart-bottom-summary-item">
                             <span className="cart-bottom-summary-item-text">Shipping Discount</span>
                             <span className="cart-bottom-summary-item-price">$ -5.90</span>
                         </div>
+                        : undefined}
+
                         <div className="cart-bottom-summary-item">
                             <span className="cart-bottom-summary-item-text" style={{"font-weight":"600" }}>Total</span>
-                            <span className="cart-bottom-summary-item-price" style={{"font-weight":"600" }}>{totalPrice}</span>
+                            <span className="cart-bottom-summary-item-price" style={{"font-weight":"600" }}>{totalwithShipping}</span>
                         </div>
+                        <StripeCheckout
+                            name="GoShop" 
+                            billingAddress
+                            shippingAddress
+                            description={`Your total is $${totalwithShipping}`}
+                            amount={totalwithShipping*100}
+                            token={(token) => setStripeToken(token)}
+                            stripeKey={stripeKey}
+                        >
                         <button className="cart-bottom-summary-button">CHECKOUT NOW</button>
+                        </StripeCheckout>
+                        
                     </div>
 
 

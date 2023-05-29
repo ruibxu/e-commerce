@@ -38,6 +38,8 @@ const Navbar = () => {
     const [searchText, setSearchText] = useState("");
     const navigate = useNavigate();
 
+    console.log(auth.user);
+
     const handleOpenDropdown = () => {
         setIsOpen(!isOpen);
     }
@@ -148,6 +150,7 @@ const Navbar = () => {
                             {!auth.loggedIn?<Link to={"/register"} className="linkcom"><MenuItem onClick={handleClose}>Register</MenuItem></Link>:undefined}
                             {!auth.loggedIn?undefined:<Link to={"/update"} className="linkcom"><MenuItem onClick={handleClose}>Change Password</MenuItem></Link>}
                             {!auth.loggedIn?undefined:<MenuItem onClick={() => { handleLogout(); handleClose(); }} >Logout</MenuItem>}
+                            {auth.user && auth.user.isAdmin?<Link to={"/admin"} className="linkcom"><MenuItem onClick={handleClose}>Admin</MenuItem></Link>:undefined}
                         </Menu>
 
                     </div>
