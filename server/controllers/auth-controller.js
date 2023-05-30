@@ -187,7 +187,13 @@ logoutUser = async (req, res) => {
 
 getLoggedIn = async (req, res) => {
     try {
-        console.log(req);
+        if (!req.cookies.token) {
+            return res.status(200).json({
+                loggedIn: false,
+                user: null,
+                errorMessage: "?"
+            })
+        }
         let userId = auth.verifyUser(req);
 
         if (!userId) {

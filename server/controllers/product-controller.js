@@ -67,16 +67,20 @@ getProducts = async (req, res) => {
         
         if (products.length === 0) {
             res.status(404).json({
-                success: false,
-                message: "No products found"
+                success: true,
+                message: "No products found",
+                products: []
+            })
+        }
+        else{
+            res.status(200).json({
+                success: true,
+                products: products
             })
         }
 
         
-        res.status(200).json({
-            success: true,
-            products: products
-        })
+
 
     } catch (error) {
         console.log(error);
