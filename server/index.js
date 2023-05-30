@@ -12,9 +12,6 @@ const db = require('./db')
 const PORT = process.env.PORT || 4000;
 
 
-const _dirname = path.dirname("")
-const buildPath = path.join(_dirname, "../client/build")
-
 app.use(express.static(buildPath))
 
 app.get("*", (req, res) => {
@@ -39,6 +36,22 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(cookieParser())
+
+const buildPath = path.join(__dirname, "../client/build");
+
+app.use(express.static(buildPath));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.resolve(buildPath, 'index.html'), (err) => {
+    if (err) {
+      console.error(err);
+      res.status(500).send(err);
+    }
+  });
+});
+
+
+
 
 /*
 async function syncDatabase() {

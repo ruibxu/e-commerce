@@ -38,8 +38,6 @@ const Navbar = () => {
     const [searchText, setSearchText] = useState("");
     const navigate = useNavigate();
 
-    console.log(auth.user);
-
     const handleOpenDropdown = () => {
         setIsOpen(!isOpen);
     }

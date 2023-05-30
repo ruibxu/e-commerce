@@ -60,13 +60,19 @@ getProducts = async (req, res) => {
         const sizeCondition = size ? { size: { [Op.regexp]: pattern(size) } } : {};
         const searchCondition = search ? { name: { [Op.like]: `%${search}%` } } : {};
         const whereCondition = { ...catCondition, ...colorCondition, ...sizeCondition, ...searchCondition };
-
         const products = await Product.findAll({
             where: whereCondition,
             order: orderCriteria,
         });
         
-        console.log(products);
+        if (products.length === 0) {
+            res.status(404).json({
+                success: false,
+                message: "No products found"
+            })
+        }
+
+        
         res.status(200).json({
             success: true,
             products: products

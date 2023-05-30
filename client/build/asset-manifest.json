@@ -1,19 +1,19 @@
 {
   "files": {
-    "main.css": "/static/css/main.05d21952.css",
-    "main.js": "/static/js/main.e5deb62c.js",
-    "static/js/787.46493d11.chunk.js": "/static/js/787.46493d11.chunk.js",
-    "static/media/Men.jpg": "/static/media/Men.ff396e0e19385269d75e.jpg",
-    "static/media/NewArraval.jpg": "/static/media/NewArraval.4e2219a31af6891eaf30.jpg",
-    "static/media/Women.jpg": "/static/media/Women.ea476e602e97e97d7de8.jpg",
-    "static/media/Sale.jpg": "/static/media/Sale.31100437a5b2aaf8a18e.jpg",
-    "index.html": "/index.html",
-    "main.05d21952.css.map": "/static/css/main.05d21952.css.map",
-    "main.e5deb62c.js.map": "/static/js/main.e5deb62c.js.map",
-    "787.46493d11.chunk.js.map": "/static/js/787.46493d11.chunk.js.map"
+    "main.css": "/e-commerce-client/static/css/main.05d21952.css",
+    "main.js": "/e-commerce-client/static/js/main.01b1e9ea.js",
+    "static/js/787.46493d11.chunk.js": "/e-commerce-client/static/js/787.46493d11.chunk.js",
+    "static/media/Men.jpg": "/e-commerce-client/static/media/Men.ff396e0e19385269d75e.jpg",
+    "static/media/NewArraval.jpg": "/e-commerce-client/static/media/NewArraval.4e2219a31af6891eaf30.jpg",
+    "static/media/Women.jpg": "/e-commerce-client/static/media/Women.ea476e602e97e97d7de8.jpg",
+    "static/media/Sale.jpg": "/e-commerce-client/static/media/Sale.31100437a5b2aaf8a18e.jpg",
+    "index.html": "/e-commerce-client/index.html",
+    "main.05d21952.css.map": "/e-commerce-client/static/css/main.05d21952.css.map",
+    "main.01b1e9ea.js.map": "/e-commerce-client/static/js/main.01b1e9ea.js.map",
+    "787.46493d11.chunk.js.map": "/e-commerce-client/static/js/787.46493d11.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.05d21952.css",
-    "static/js/main.e5deb62c.js"
+    "static/js/main.01b1e9ea.js"
   ]
 }
