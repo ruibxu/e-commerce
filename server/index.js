@@ -12,22 +12,6 @@ const db = require('./db')
 const PORT = process.env.PORT || 4000;
 
 
-app.use(express.static(buildPath))
-
-app.get("*", (req, res) => {
-
-  res.sendFile(
-    path.join(buildPath, "index.html"),
-    function (err) {
-      if (err) {
-          res.status(500).send(err)
-      }
-    }
-  );
-})
-
-
-
 // SETUP THE MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
 app.use(cors({
@@ -36,19 +20,6 @@ app.use(cors({
 }))
 app.use(express.json())
 app.use(cookieParser())
-
-const buildPath = path.join(__dirname, "../client/build");
-
-app.use(express.static(buildPath));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.resolve(buildPath, 'index.html'), (err) => {
-    if (err) {
-      console.error(err);
-      res.status(500).send(err);
-    }
-  });
-});
 
 
 
@@ -82,15 +53,17 @@ const favorieRouter = require('./routes/favorite-router')
 app.use('/api/favorite', favorieRouter)
 
 
+app.use(express.static(path.resolve(__dirname, "./client/build")));
+
+app.get("*", function (request, response) {
+  response.sendFile(path.resolve(__dirname, "./client/build", "index.html"));
+});
+
+
+
 
 
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`))
-
-app.get('/', function (req, res) {
-    res.send('Hello, this is the backend!')
-  })
-
-
 
 
 
