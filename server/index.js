@@ -2,6 +2,7 @@ const express = require('express')
 const cors = require('cors')
 require('dotenv').config();
 const cookieParser = require('cookie-parser')
+const path = require('path')
 
 
 const app = express()
@@ -9,6 +10,25 @@ const app = express()
 const db = require('./db')
 
 const PORT = process.env.PORT || 4000;
+
+
+const _dirname = path.dirname("")
+const buildPath = path.join(_dirname, "../client/build")
+
+app.use(express.static(buildPath))
+
+app.get("*", (req, res) => {
+
+  res.sendFile(
+    path.join(buildPath, "index.html"),
+    function (err) {
+      if (err) {
+          res.status(500).send(err)
+      }
+    }
+  );
+})
+
 
 
 // SETUP THE MIDDLEWARE
