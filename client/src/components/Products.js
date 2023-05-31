@@ -49,8 +49,8 @@ const Products  = ({category,filters,sort,search}) => {
         <div className="products">
             <div className="container">
             {location.pathname !== '/'
-            ? products.map((item) => <ProductItem item={item} key={item.id} />)
-            : products
+            ? products && products.map((item) => <ProductItem item={item} key={item.id} />)
+            : products && products
             .slice(0, 10)
             .map((item) => <ProductItem item={item} key={item.id} />)}
             </div>
