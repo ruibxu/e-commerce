@@ -7,20 +7,20 @@ registerUser = async (req, res) => {
 
     //console.log("REGISTERING USER IN BACKEND");
     try {
-        const { username, email, password, passwordVerify, secretKey } = req.body;
+        const { username, email, password, passwordVerify, secretKey ,flag } = req.body;
         //console.log("create user: " + username + " " + email + " " + password + " " + passwordVerify);
         let isAdmin = false;
-        if (secretKey && secretKey === process.env.SECRET_KEY) {
+        if (flag==1 && secretKey && secretKey === process.env.SECRET_KEY) {
             isAdmin = true;
         }
-        else{
+        if (flag==1 && !secretKey ) {
             return res
-            .status(400)
-            .json({
-                success: false,
-                errorMessage: "Invalid secret key."
-            })
+                .status(400)
+                .json({
+                    errorMessage: "Please enter the secret key."
+                })
         }
+
         if (!username || !email || !password || !passwordVerify) {
             return res
                 .status(400)

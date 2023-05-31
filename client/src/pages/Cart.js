@@ -25,6 +25,8 @@ const Cart = () => {
     const totalwithShipping= totalPrice>=100? totalPrice: totalPrice+5.90;
 
     const stripeKey=process.env.REACT_APP_STRIPE_PUBLISHABLE_KEY;
+
+    const disable= cart.length===0;
     
     useEffect(() => {
         const makeRequest = async () => {
@@ -138,7 +140,7 @@ const Cart = () => {
                             token={(token) => setStripeToken(token)}
                             stripeKey={stripeKey}
                         >
-                        <button className="cart-bottom-summary-button">CHECKOUT NOW</button>
+                        <button disabled={disable}className="cart-bottom-summary-button">CHECKOUT NOW</button>
                         </StripeCheckout>
                         
                     </div>

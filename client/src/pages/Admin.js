@@ -96,22 +96,7 @@ const ADD_PRODUCT = () =>{
 
     const handleAddProduct = async (e) => { 
         e.preventDefault();
-        if (!productData.name){
-            handleOpenDialog("ERROR","Product name is required!");
-            return;
-        }
-        if (!productData.description){
-            handleOpenDialog("ERROR","Product description is required!");
-            return;
-        }
-        if (!productData.price){
-            handleOpenDialog("ERROR","Product price is required!");
-            return;
-        }
-        if (!productData.image){
-            handleOpenDialog("ERROR","Product image is required!");
-            return;
-        }
+
         try{
             const response = await api.createProduct(productData);
             

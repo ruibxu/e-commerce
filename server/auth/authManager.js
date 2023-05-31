@@ -56,10 +56,13 @@ function authManager() {
             }
     
             user = await User.findOne({ where: { id: userId } });
-            if (!user || !user.isadmin) {
-                return null;
-              }
-            return userId;
+            if (!user || !user.isAdmin) {
+                return res.status(401).json({
+                    errorMessage: "You are not authorized to access this resource"
+                });
+            }
+            req.userId = userId;
+            next();
         }
         catch (err) {
             return null;

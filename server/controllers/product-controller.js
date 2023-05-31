@@ -2,7 +2,12 @@ const Product = require('../models/product-model');
 const { Op } = require('sequelize');
 
 createProduct = async (req, res) => {
-    console.log(req.body);
+    console.log("createProduct called");
+    const {name, description, price, image, categories, size, color} = req.body;
+    if (name === '' || description === '' || price === '' || image === '' ) {
+        return res.status(400).json({ message: "name, description, price, image can not be empty"});
+    }
+
     try{
         const newProduct = await Product.create(req.body);
         res.status(201).json({
@@ -41,7 +46,7 @@ getProductById = async (req, res) => {
 
 getProducts = async (req, res) => {
     try {
-
+        console.log(req.query);
         const category = req.query.category ? req.query.category.join(';') : undefined;
         console.log(req.query.color);
         const color = req.query.color ? req.query.color.join(';'): undefined;
@@ -64,7 +69,6 @@ getProducts = async (req, res) => {
             where: whereCondition,
             order: orderCriteria,
         });
-        
         if (products.length === 0) {
             res.status(404).json({
                 success: true,

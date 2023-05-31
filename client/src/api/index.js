@@ -19,7 +19,7 @@ export const updateUser = (id, payload) => api.put(`auth/user/${id}`, payload)
 
 //product
 export const createProduct = (payload) => api.post(`products/`, payload)
-export const getProducts = (payload) => api.get('products', { params: payload });
+export const getProducts = (payload) => api.get('products/', { params: payload });
 export const getProductById = (id) => api.get(`products/${id}`)
 export const updateProduct = (id, payload) => api.put(`products/${id}`, payload)
 export const deleteProduct = (id) => api.delete(`products/${id}`)

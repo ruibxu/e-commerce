@@ -418,6 +418,10 @@ $font: 'Roboto', sans-serif;
                         height: 100%;
                         opacity: var(--visible);
                         background-color: rgba(0, 0, 0, var(--visible2));
+                        .product-original-price{
+                            text-decoration: line-through;
+                            text-decoration-color: $link;
+                        }
                     }
                 }
             }
@@ -683,11 +687,13 @@ $font: 'Roboto', sans-serif;
                     font-size: 1.5rem;
                     margin: 20px 0;
                 }
+
                 .product-price{
                     font-size: 3rem;
                     font-weight: 600;
                     margin: 20px 0;
                 }
+
                 .product-filter-container{
                     display: flex;
                     justify-content: space-between;

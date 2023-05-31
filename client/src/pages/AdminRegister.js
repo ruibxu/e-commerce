@@ -49,7 +49,8 @@ export default function AdminRegister() {
         username,
         password,
         passwordVerify,
-        secretKey
+        secretKey,
+        flag: 1
       };
       auth.registerUser(registerData);
     }catch(err){
