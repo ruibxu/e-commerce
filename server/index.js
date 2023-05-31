@@ -11,6 +11,15 @@ const db = require('./db')
 
 const PORT = process.env.PORT || 4000;
 
+const https = require('https');
+
+const httpsOptions = {
+        cert: fs.readFileSync("/etc/letsencrypt/live/e-commerce.ruiboxu.com/fullchain.pem"),
+        key: fs.readFileSync("/etc/letsencrypt/live/e-commerce.ruiboxu.com/privkey.pem")
+}
+
+https.createServer(httpsOptions, app).listen(PORT);
+
 
 // SETUP THE MIDDLEWARE
 app.use(express.urlencoded({ extended: true }))
